@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>KUIS KEARIFAN LOKAL (KUPATAN)</title>
+<style>
+  :root{
+    --bg:#FFF8F2; --card:#FFFFFF; --accent:#6fbf73; --muted:#6b7280;
+  }
+  body{
+    font-family: 'Poppins', Arial, sans-serif;
+    background: linear-gradient(180deg,#fffefc 0%,#f6fff5 100%);
+    margin:0;color:#123;
+  }
+  header{
+    padding:18px;background:var(--accent);color:#fff;border-radius:0 0 18px 18px;text-align:center;
+  }
+  .wrap{max-width:920px;margin:20px auto;padding:18px}
+  .card{background:var(--card);border-radius:16px;padding:18px;box-shadow:0 8px 28px rgba(17,24,39,0.06)}
+  h1{margin:0;font-size:20px}
+  p.lead{color:var(--muted);margin:8px 0 18px}
+  .page{display:none}
+  .page.active{display:block;animation:fadeIn .35s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+  .q{margin:12px 0;padding:12px;border-radius:12px;background:linear-gradient(90deg,#fff,#fbfff8);border:1px solid rgba(96,168,107,0.06)}
+  .opt{padding:8px;border-radius:8px;border:1px solid #e6efe6;margin:6px 0;cursor:pointer}
+  .opt.selected{background:rgba(111,191,115,0.12);border-color:rgba(96,168,107,0.22)}
+  textarea,input[type="text"]{width:100%;padding:10px;border-radius:8px;border:1px solid #e6e6e6;margin-top:6px}
+  .controls{display:flex;gap:10px;justify-content:space-between;margin-top:14px}
+  .btn{background:var(--accent);color:#fff;border:0;padding:10px 14px;border-radius:10px;cursor:pointer}
+  .btn.ghost{background:transparent;color:var(--accent);border:1px dashed rgba(111,191,115,0.4)}
+  footer{font-size:13px;color:var(--muted);margin-top:12px;text-align:center}
+  .small{font-size:13px;color:var(--muted)}
+  @media (max-width:640px){ .controls{flex-direction:column-reverse} }
+</style>
+</head>
+<body>
+<header>
+  <h1>🌿 KUIS KEARIFAN LOKAL (KUPATAN)</h1>
+  <div class="small">Manusia yang Beradab dalam Kearifan Lokal — Kerjakan dengan jujur!</div>
+</header>
+
+<div class="wrap card">
+  <!-- Slide 1: identitas -->
+  <div id="p0" class="page active">
+    <h2>Hai! Isi datamu dulu ya 😊</h2>
+    <p class="small">Nama, kelas, dan no. absen dibutuhkan agar guru tahu siapa yang mengerjakan.</p>
+    <label>Nama</label>
+    <input id="nama" type="text" placeholder="Contoh: Siti Aisyah">
+    <label>Kelas</label>
+    <input id="kelas" type="text" placeholder="Contoh: 5A">
+    <label>No. Absen</label>
+    <input id="absen" type="text" placeholder="Contoh: 12">
+    <div style="margin-top:12px" class="controls">
+      <div></div>
+      <button class="btn" onclick="goPage(1)">🎉 Mulai Kuis</button>
+    </div>
+  </div>
+
+  <!-- Pages 1..4 = PG (5 soal per page) -->
+  <!-- Page 1: soal 1-5 -->
+  <div id="p1" class="page">
+    <h3>Bagian A — Pilihan Ganda (Soal 1–5)</h3>
+
+    <div class="q" data-i="0">
+      <div><b>1.</b> Tradisi Kupatan Syawalan biasanya dilaksanakan pada…</div>
+      <div class="opt" data-a="0">A. Malam takbiran</div>
+      <div class="opt" data-a="1">B. Seminggu setelah Idulfitri</div>
+      <div class="opt" data-a="2">C. Hari raya Iduladha</div>
+      <div class="opt" data-a="3">D. Setelah puasa Arafah</div>
+    </div>
+
+    <div class="q" data-i="1">
+      <div><b>2.</b> Tujuan utama dari tradisi Kupatan adalah…</div>
+      <div class="opt" data-a="0">A. Menambah harta dan makanan</div>
+      <div class="opt" data-a="1">B. Menampilkan budaya modern</div>
+      <div class="opt" data-a="2">C. Mempererat persaudaraan dan melestarikan budaya</div>
+      <div class="opt" data-a="3">D. Menentukan hari libur</div>
+    </div>
+
+    <div class="q" data-i="2">
+      <div><b>3.</b> Kata “kupat” dalam tradisi Jawa diartikan sebagai…</div>
+      <div class="opt" data-a="0">A. Ngaku lepat</div>
+      <div class="opt" data-a="1">B. Lupa makan</div>
+      <div class="opt" data-a="2">C. Banyak rezeki</div>
+      <div class="opt" data-a="3">D. Rumah ketupat</div>
+    </div>
+
+    <div class="q" data-i="3">
+      <div><b>4.</b> Makna “ngaku lepat” adalah…</div>
+      <div class="opt" data-a="0">A. Mengaku pandai</div>
+      <div class="opt" data-a="1">B. Mengaku salah</div>
+      <div class="opt" data-a="2">C. Mengaku kaya</div>
+      <div class="opt" data-a="3">D. Mengaku benar</div>
+    </div>
+
+    <div class="q" data-i="4">
+      <div><b>5.</b> Sikap yang diajarkan dalam tradisi Kupatan adalah, kecuali…</div>
+      <div class="opt" data-a="0">A. Saling berbagi</div>
+      <div class="opt" data-a="1">B. Hidup rukun</div>
+      <div class="opt" data-a="2">C. Mengumpulkan kekayaan</div>
+      <div class="opt" data-a="3">D. Saling memaafkan</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" onclick="goPage(0)">◀ Sebelumnya</button>
+      <button class="btn" onclick="goPage(2)">Lanjut ▶</button>
+    </div>
+  </div>
+
+  <!-- Page 2: soal 6-10 -->
+  <div id="p2" class="page">
+    <h3>Bagian A — Pilihan Ganda (Soal 6–10)</h3>
+
+    <div class="q" data-i="5">
+      <div><b>6.</b> Contoh adab yang terlihat dalam Kupatan adalah…</div>
+      <div class="opt" data-a="0">A. Rasa ikhlas</div>
+      <div class="opt" data-a="1">B. Berbagi ketupat dengan tetangga</div>
+      <div class="opt" data-a="2">C. Rasa syukur dalam hati</div>
+      <div class="opt" data-a="3">D. Niat memaafkan</div>
+    </div>
+
+    <div class="q" data-i="6">
+      <div><b>7.</b> Yang termasuk adab tidak terlihat adalah…</div>
+      <div class="opt" data-a="0">A. Membantu membersihkan tempat</div>
+      <div class="opt" data-a="1">B. Berkunjung ke rumah tetangga</div>
+      <div class="opt" data-a="2">C. Rasa ikhlas saat berbagi</div>
+      <div class="opt" data-a="3">D. Menyiapkan ketupat bersama</div>
+    </div>
+
+    <div class="q" data-i="7">
+      <div><b>8.</b> Adab tidak terlihat disebut demikian karena…</div>
+      <div class="opt" data-a="0">A. Dilakukan di tempat umum</div>
+      <div class="opt" data-a="1">B. Tidak dapat dirasakan</div>
+      <div class="opt" data-a="2">C. Tidak mudah diamati oleh orang lain</div>
+      <div class="opt" data-a="3">D. Tidak memiliki nilai kebaikan</div>
+    </div>
+
+    <div class="q" data-i="8">
+      <div><b>9.</b> Masyarakat dikatakan beradab jika…</div>
+      <div class="opt" data-a="0">A. Semua anggotanya kaya</div>
+      <div class="opt" data-a="1">B. Anggotanya hidup rukun dan saling menghormati</div>
+      <div class="opt" data-a="2">C. Memiliki banyak gedung tinggi</div>
+      <div class="opt" data-a="3">D. Tidak memiliki tradisi</div>
+    </div>
+
+    <div class="q" data-i="9">
+      <div><b>10.</b> Salah satu nilai utama Kupatan adalah…</div>
+      <div class="opt" data-a="0">A. Kompetisi antarwarga</div>
+      <div class="opt" data-a="1">B. Mengakui kesalahan</div>
+      <div class="opt" data-a="2">C. Menyembunyikan kesalahan</div>
+      <div class="opt" data-a="3">D. Mengunggulkan diri</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" onclick="goPage(1)">◀ Sebelumnya</button>
+      <button class="btn" onclick="goPage(3)">Lanjut ▶</button>
+    </div>
+  </div>
+
+  <!-- Page 3: soal 11-15 -->
+  <div id="p3" class="page">
+    <h3>Bagian A — Pilihan Ganda (Soal 11–15)</h3>
+
+    <div class="q" data-i="10">
+      <div><b>11.</b> Tradisi Kupatan biasanya dilakukan di…</div>
+      <div class="opt" data-a="0">A. Mall dan pusat perbelanjaan</div>
+      <div class="opt" data-a="1">B. Rumah atau balai desa</div>
+      <div class="opt" data-a="2">C. Bandara</div>
+      <div class="opt" data-a="3">D. Hotel</div>
+    </div>
+
+    <div class="q" data-i="11">
+      <div><b>12.</b> Membuat ketupat secara manual menunjukkan nilai…</div>
+      <div class="opt" data-a="0">A. Kemewahan</div>
+      <div class="opt" data-a="1">B. Kesederhanaan dan gotong royong</div>
+      <div class="opt" data-a="2">C. Persaingan</div>
+      <div class="opt" data-a="3">D. Kelicikan</div>
+    </div>
+
+    <div class="q" data-i="12">
+      <div><b>13.</b> Menghormati orang tua termasuk contoh…</div>
+      <div class="opt" data-a="0">A. Adab terhadap diri sendiri</div>
+      <div class="opt" data-a="1">B. Adab terhadap lingkungan</div>
+      <div class="opt" data-a="2">C. Adab terhadap sesama</div>
+      <div class="opt" data-a="3">D. Adab yang salah</div>
+    </div>
+
+    <div class="q" data-i="13">
+      <div><b>14.</b> Salah satu ciri orang yang beradab adalah…</div>
+      <div class="opt" data-a="0">A. Tidak mau meminta maaf</div>
+      <div class="opt" data-a="1">B. Menyakiti orang lain</div>
+      <div class="opt" data-a="2">C. Menjaga kebersihan</div>
+      <div class="opt" data-a="3">D. Bersikap sombong</div>
+    </div>
+
+    <div class="q" data-i="14">
+      <div><b>15.</b> Kupatan mengajarkan manusia agar tidak…</div>
+      <div class="opt" data-a="0">A. Bersyukur</div>
+      <div class="opt" data-a="1">B. Berbagi</div>
+      <div class="opt" data-a="2">C. Sombong</div>
+      <div class="opt" data-a="3">D. Sopan</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" onclick="goPage(2)">◀ Sebelumnya</button>
+      <button class="btn" onclick="goPage(4)">Lanjut ▶</button>
+    </div>
+  </div>
+
+  <!-- Page 4: soal 16-20 -->
+  <div id="p4" class="page">
+    <h3>Bagian A — Pilihan Ganda (Soal 16–20)</h3>
+
+    <div class="q" data-i="15">
+      <div><b>16.</b> Yang menjadi simbol rasa syukur dalam Kupatan adalah…</div>
+      <div class="opt" data-a="0">A. Saling memusuhi</div>
+      <div class="opt" data-a="1">B. Berbagi makanan</div>
+      <div class="opt" data-a="2">C. Berdiam diri saja</div>
+      <div class="opt" data-a="3">D. Membuat masalah</div>
+    </div>
+
+    <div class="q" data-i="16">
+      <div><b>17.</b> Hal yang menunjukkan adab terlihat saat Kupatan adalah…</div>
+      <div class="opt" data-a="0">A. Rasa bangga di dalam hati</div>
+      <div class="opt" data-a="1">B. Niat memaafkan</div>
+      <div class="opt" data-a="2">C. Membantu menyiapkan makanan</div>
+      <div class="opt" data-a="3">D. Perasaan syukur</div>
+    </div>
+
+    <div class="q" data-i="17">
+      <div><b>18.</b> Mengapa adab tidak terlihat penting?</div>
+      <div class="opt" data-a="0">A. Karena membuat seseorang terkenal</div>
+      <div class="opt" data-a="1">B. Membentuk kepribadian baik meski tidak tampak</div>
+      <div class="opt" data-a="2">C. Agar dipuji banyak orang</div>
+      <div class="opt" data-a="3">D. Supaya mendapat hadiah</div>
+    </div>
+
+    <div class="q" data-i="18">
+      <div><b>19.</b> Jika manusia kehilangan adab, maka…</div>
+      <div class="opt" data-a="0">A. Ilmunya tetap bermanfaat</div>
+      <div class="opt" data-a="1">B. Ilmu dan hartanya tidak membawa manfaat</div>
+      <div class="opt" data-a="2">C. Ia akan semakin bijak</div>
+      <div class="opt" data-a="3">D. Ia menjadi lebih dihargai</div>
+    </div>
+
+    <div class="q" data-i="19">
+      <div><b>20.</b> Kupatan Syawalan mengajarkan manusia untuk…</div>
+      <div class="opt" data-a="0">A. Hidup semaunya</div>
+      <div class="opt" data-a="1">B. Menjunjung nilai-nilai kebaikan</div>
+      <div class="opt" data-a="2">C. Tidak bergaul dengan tetangga</div>
+      <div class="opt" data-a="3">D. Saling menyalahkan</div>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" onclick="goPage(3)">◀ Sebelumnya</button>
+      <button class="btn" onclick="goPage(5)">Lanjut ke Essay ▶</button>
+    </div>
+  </div>
+
+  <!-- Page 5: Essay -->
+  <div id="p5" class="page">
+    <h3>Bagian B — Essay Singkat (Soal 1–5)</h3>
+    <div class="q">
+      <div><b>1.</b> Jelaskan apa makna kata “ngaku lepat” dalam tradisi Kupatan dan mengapa penting untuk diterapkan dalam kehidupan sehari-hari!</div>
+      <textarea id="e1" rows="4" placeholder="Tulis jawabanmu..."></textarea>
+    </div>
+    <div class="q">
+      <div><b>2.</b> Sebutkan perbedaan antara adab yang terlihat dan adab yang tidak terlihat, lalu berikan masing-masing satu contohnya!</div>
+      <textarea id="e2" rows="3" placeholder="Tulis jawabanmu..."></textarea>
+    </div>
+    <div class="q">
+      <div><b>3.</b> Mengapa tradisi seperti Kupatan penting untuk dilestarikan oleh masyarakat? Berikan dua alasannya.</div>
+      <textarea id="e3" rows="3" placeholder="Tulis jawabanmu..."></textarea>
+    </div>
+    <div class="q">
+      <div><b>4.</b> Bagaimana cara tradisi Kupatan mengajarkan kita untuk hidup rukun dan saling menghargai? Jelaskan dengan singkat!</div>
+      <textarea id="e4" rows="3" placeholder="Tulis jawabanmu..."></textarea>
+    </div>
+    <div class="q">
+      <div><b>5.</b> Menurutmu, adab manakah yang lebih sulit dilakukan: adab terlihat atau adab tidak terlihat? Jelaskan alasannya!</div>
+      <textarea id="e5" rows="3" placeholder="Tulis jawabanmu..."></textarea>
+    </div>
+
+    <div class="controls">
+      <button class="btn ghost" onclick="goPage(4)">◀ Sebelumnya</button>
+      <button class="btn" onclick="submitQuiz()">✅ Submit & Lihat Skor</button>
+    </div>
+  </div>
+
+  <!-- Result page -->
+  <div id="result" class="page">
+    <h2>🎉 Hasilmu</h2>
+    <p class="small">Terima kasih sudah mengerjakan — berikut hasil pilihan ganda kamu:</p>
+    <p style="font-size:18px"><b>Skor: <span id="scoreNum"></span> / 20</b></p>
+    <div class="small">Catatan: Jawaban essay dan tabel disimpan dan bisa dinilai guru secara manual.</div>
+    <div style="margin-top:12px" class="controls">
+      <button class="btn" onclick="downloadResult()">💾 Simpan Hasil (download .json)</button>
+      <button class="btn ghost" onclick="restart()">↻ Ulangi</button>
+    </div>
+  </div>
+
+  <footer>
+    <div class="small">File ini bisa dijalankan offline. Kirim file hasil (.json) ke guru untuk penilaian essay.</div>
+  </footer>
+</div>
+
+<script>
+/* Jawaban benar (0=A,1=B,2=C,3=D) sesuai kunci yang diberikan */
+const jawabanBenar = [1,2,0,1,2,1,2,2,1,1,1,1,2,2,2,1,2,1,1,1];
+
+function goPage(n){
+  const mapping = {0:'p0',1:'p1',2:'p2',3:'p3',4:'p4',5:'p5'};
+  const pages = ['p0','p1','p2','p3','p4','p5','result'];
+  document.querySelectorAll('.page, #result').forEach(el=>el.classList.remove('active'));
+  if(n in mapping) document.getElementById(mapping[n]).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* opt click handling */
+document.querySelectorAll('.opt').forEach(opt=>{
+  opt.addEventListener('click', ()=> {
+    const container = opt.parentElement;
+    container.querySelectorAll('.opt').forEach(o=>o.classList.remove('selected'));
+    opt.classList.add('selected');
+  });
+});
+
+/* submit and grading */
+function submitQuiz(){
+  const nama = document.getElementById('nama').value.trim();
+  if(!nama){ alert('Isi nama dulu, ya.'); goPage(0); return; }
+  let skor = 0;
+  const answers = new Array(20).fill(null);
+  document.querySelectorAll('.q').forEach(q=>{
+    const idx = parseInt(q.getAttribute('data-i'));
+    const picked = q.querySelector('.opt.selected');
+    if(picked){
+      answers[idx] = parseInt(picked.getAttribute('data-a'));
+      if(answers[idx] === jawabanBenar[idx]) skor++;
+    } else {
+      answers[idx] = null;
+    }
+  });
+  const essay = [
+    document.getElementById('e1').value.trim(),
+    document.getElementById('e2').value.trim(),
+    document.getElementById('e3').value.trim(),
+    document.getElementById('e4').value.trim(),
+    document.getElementById('e5').value.trim()
+  ];
+  const result = {
+    nama: nama,
+    kelas: document.getElementById('kelas').value.trim(),
+    absen: document.getElementById('absen').value.trim(),
+    skor: skor,
+    total_mcq: 20,
+    answers_mcq: answers,
+    essay_answers: essay,
+    waktu: new Date().toLocaleString(),
+    nilai_guru: "",
+    catatan_guru: ""
+  };
+  window._kuisResult = result;
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('result').classList.add('active');
+  document.getElementById('scoreNum').textContent = skor;
+  window.scrollTo(0,0);
+}
+
+/* download JSON result */
+function downloadResult(){
+  if(!window._kuisResult){ alert('Belum ada hasil untuk disimpan.'); return; }
+  const blob = new Blob([JSON.stringify(window._kuisResult,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const safeName = (window._kuisResult.nama || 'siswa').replace(/\s+/g,'_');
+  a.download = `hasil_${safeName}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  alert('File hasil telah diunduh. Kirimkan file tersebut ke gurumu untuk penilaian essay.');
+}
+
+/* restart */
+function restart(){ location.reload(); }
+
+goPage(0);
+</script>
+</body>
+</html>
