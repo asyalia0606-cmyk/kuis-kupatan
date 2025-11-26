@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Guru – Kuis Kearifan Lokal (Kupatan)</title>
+<style>
+body{font-family: Poppins, Arial; background:#f4fff6; padding:20px; margin:0;}
+.card{max-width:1100px; margin:20px auto; background:white; padding:18px; border-radius:12px; box-shadow:0 6px 20px rgba(0,0,0,0.06);}
+h1{text-align:center; color:#2f7f48;}
+input[type=file]{padding:6px;}
+.table{width:100%; border-collapse:collapse; margin-top:12px;}
+.table th, .table td{border:1px solid #e6f2ea; padding:8px; vertical-align:top;}
+.table th{background:#e8fff0;}
+textarea{width:100%; min-height:70px; padding:6px;}
+.btn{padding:8px 12px; background:#4CAF50; color:white; border:none; border-radius:8px; cursor:pointer;}
+.btn.ghost{background:transparent; color:#4CAF50; border:1px solid #cfead4;}
+.flex{display:flex; gap:8px; align-items:center;}
+.small{font-size:13px;color:#556;}
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>📘 Dashboard Guru — KUIS KEARIFAN LOKAL (KUPATAN)</h1>
+  <p class="small">Unggah satu atau beberapa file hasil siswa (.json). Setelah memuat, Anda dapat mengisi <b>Nilai Guru</b> dan <b>Catatan Guru</b>, lalu unduh rekap CSV atau simpan masing-masing file JSON yang diperbarui.</p>
+
+  <div class="flex">
+    <input type="file" id="files" accept=".json" multiple>
+    <button class="btn" id="exportCsv">⬇️ Ekspor CSV</button>
+    <button class="btn ghost" id="clearAll">🗑️ Bersihkan</button>
+  </div>
+
+  <table class="table" id="tbl">
+    <thead>
+      <tr>
+        <th>No</th><th>Nama</th><th>Kelas</th><th>Absen</th><th>Skor</th><th>Jawaban PG</th><th>Jawaban Essay</th><th>Nilai Guru</th><th>Catatan Guru</th><th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<script>
+const filesInput = document.getElementById('files');
+const tbody = document.querySelector('#tbl tbody');
+let records = [];
+
+filesInput.addEventListener('change', e=>{
+  const files = [...e.target.files];
+  files.forEach(file=>{
+    const reader = new FileReader();
+    reader.onload = ev=>{
+      try{
+        const d = JSON.parse(ev.target.result);
+        // ensure fields exist
+        d.nilai_guru = d.nilai_guru === undefined ? "" : d.nilai_guru;
+        d.catatan_guru = d.catatan_guru === undefined ? "" : d.catatan_guru;
+        records.push(d);
+        renderTable();
+      }catch(err){
+        alert('File ' + file.name + ' tidak valid JSON.');
+      }
+    };
+    reader.readAsText(file);
+  });
+});
+
+function renderTable(){
+  tbody.innerHTML = '';
+  records.forEach((r,i)=>{
+    const tr = document.createElement('tr');
+    const pgAnswers = (r.answers_mcq || []).map((a,idx)=> (a===null?'-':String.fromCharCode(65+a))).join(', ');
+    const essays = (r.essay_answers || []).map((t,idx)=>`<b>Essay ${idx+1}:</b> ${escapeHtml(t||'-')}`).join('<br>');
+    tr.innerHTML = `
+      <td>${i+1}</td>
+      <td>${escapeHtml(r.nama||'')}</td>
+      <td>${escapeHtml(r.kelas||'')}</td>
+      <td>${escapeHtml(r.absen||'')}</td>
+      <td>${r.skor||0}</td>
+      <td style="white-space:pre-wrap">${escapeHtml(pgAnswers)}</td>
+      <td style="white-space:pre-wrap">${essays}</td>
+      <td><input type="text" data-i="${i}" class="nilai" value="${escapeHtml(r.nilai_guru||'')}" style="width:80px"></td>
+      <td><textarea data-i="${i}" class="catatan">${escapeHtml(r.catatan_guru||'')}</textarea></td>
+      <td>
+        <button class="btn" data-i="${i}" onclick="saveOne(${i})">💾 Save JSON</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+  // attach listeners for inputs to update records live
+  document.querySelectorAll('.nilai').forEach(inp=>{
+    inp.oninput = ()=> records[parseInt(inp.getAttribute('data-i'))].nilai_guru = inp.value;
+  });
+  document.querySelectorAll('.catatan').forEach(ta=>{
+    ta.oninput = ()=> records[parseInt(ta.getAttribute('data-i'))].catatan_guru = ta.value;
+  });
+}
+
+function saveOne(i){
+  const r = records[i];
+  const blob = new Blob([JSON.stringify(r,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const safe = (r.nama||'siswa').replace(/\s+/g,'_');
+  a.download = `nilai_guru_${safe}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  alert('File nilai guru tersimpan untuk: ' + (r.nama||'siswa'));
+}
+
+document.getElementById('exportCsv').addEventListener('click', ()=>{
+  if(!records.length){ alert('Belum ada data'); return; }
+  const header = ['Nama','Kelas','Absen','Skor','JawabanPG','Essay1','Essay2','Essay3','Essay4','Essay5','NilaiGuru','CatatanGuru'];
+  const rows = records.map(r=>{
+    const pg = (r.answers_mcq||[]).map(a=> a===null? '': String.fromCharCode(65+a)).join('|');
+    const essays = r.essay_answers || [];
+    return [
+      r.nama||'', r.kelas||'', r.absen||'', r.skor||'', pg,
+      essays[0]||'', essays[1]||'', essays[2]||'', essays[3]||'', essays[4]||'', r.nilai_guru||'', r.catatan_guru||''
+    ];
+  });
+  const csv = [header, ...rows].map(r=> r.map(c=> '"'+String(c).replace(/"/g,'""')+'"').join(',')).join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'rekap_kuis_kupatan.csv'; a.click(); URL.revokeObjectURL(a.href);
+});
+
+document.getElementById('clearAll').addEventListener('click', ()=>{
+  if(confirm('Bersihkan semua data?')){ records=[]; renderTable(); document.getElementById('files').value = ''; }
+});
+
+function escapeHtml(s){ return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+</script>
+
+</body>
+</html>
